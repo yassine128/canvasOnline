@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas Drawing Game</title>
+</head>
+<body>   
+    <h1>Canvas Online</h1>
+    <input id="myColor" type="color"/>
+    <input type="number" id="lineWidth" value="2" min="1" step="1">
+    <button id="saveBtn">Save Canvas</button>
+    <canvas id="canvas" width="800" height="600"></canvas>
+
+    <div class="listOfUsers">
+      <h1>Users online</h1>
+    </div>
+
+    <div id="chatBox">
+      <h1>chatBox</h1>
+    </div>
+    <input id="inputMsg" type="text"><button id="sendMsg">Send</button>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="draw.js"></script>
+</body>
+</html>
