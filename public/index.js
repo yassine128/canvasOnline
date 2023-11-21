@@ -14,7 +14,7 @@ userBtn.addEventListener('click', () => {
         return; 
     }
 
-    socket.emit('newUser', username); 
+    //socket.emit('newUser', username); 
     setCookie("username", username, 30);
 
     window.location.href = "/draw";

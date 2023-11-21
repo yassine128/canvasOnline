@@ -31,13 +31,17 @@ chatBtn.addEventListener('click', () => {
     if (message === "") return 
 
     const username = getCookie("username");
+
+    if (username === null) {
+        username = "Guest";
+    }
+
     document.getElementById('inputMsg').value = ""; 
     socket.emit('messageSent', message, username); 
 });
 
 // Receive info logic 
 socket.on('messageReceived', (message, username) => {
-    console.log(message, username)
     const p = document.createElement('p'); 
     p.textContent = `${username}: ${message}`;   
     
@@ -53,17 +57,17 @@ socket.on('draw', (start, end, color, width) => {
     ctx.stroke(); 
 });
 
-socket.on('user', (username) => {
-    location.reload();
-    divUsers.innerHTML = "<h1>Users online</h1>";
-    console.log(username.length)
+// socket.on('user', (username) => {
+//     location.reload();
+//     divUsers.innerHTML = "<h1>Users online</h1>";
+//     console.log(username.length)
 
-    for (let i = 0; i < username.length; i++) {
-        const p = document.createElement('p'); 
-        p.textContent = username[i]; 
-        divUsers.appendChild(p);
-    }   
-}); 
+//     for (let i = 0; i < username.length; i++) {
+//         const p = document.createElement('p'); 
+//         p.textContent = username[i]; 
+//         divUsers.appendChild(p);
+//     }   
+// }); 
 
 // Save canvas logic 
 const saveBtn = document.getElementById("saveBtn"); 
