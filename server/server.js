@@ -28,8 +28,8 @@ io.on('connection', (socket) => {
   //console.log('User connected');
   io.emit('user', listOfUsers);
 
-  socket.on('newDrawing', (start, end, color, width, drawingId) => {
-    io.emit('draw', start, end, color, width, drawingId); 
+  socket.on('newDrawing', (start, end, color, width) => {
+    io.emit('draw', start, end, color, width); 
   });
 
   socket.on('messageSent', (message, username) => {
