@@ -48,13 +48,9 @@ socket.on('messageReceived', (message, username) => {
     chatBox.appendChild(p); 
 })
 
-socket.on('draw', (start, end, color, width) => {
-    ctx.strokeStyle = color;
-    ctx.lineWidth = width;
-    ctx.beginPath();
-    ctx.moveTo(start.x, start.y); 
-    ctx.lineTo(end.x, end.y); 
-    ctx.stroke(); 
+socket.on('draw', (pos, color, width) => {
+    ctx.fillStyle = color;
+    ctx.fillRect(pos.x,pos.y, width, width);
 });
 
 
@@ -81,9 +77,6 @@ canvas.addEventListener('mousedown', (e) => {
         x: (e.clientX - rect.left) / rect.width * canvas.width,
         y: (e.clientY - rect.top) / rect.height * canvas.height
     };
-    ctx.strokeStyle = myColor.value;
-    ctx.beginPath();
-    ctx.moveTo(startingPos.x, startingPos.y);
 });
 
 canvas.addEventListener('mousemove', (e) => {
@@ -94,15 +87,12 @@ canvas.addEventListener('mousemove', (e) => {
         y: (e.clientY - rect.top) / rect.height * canvas.height
     };
 
-    ctx.lineTo(currentPos.x, currentPos.y); 
-    ctx.stroke();
+    // ctx.lineTo(currentPos.x, currentPos.y); 
+    // ctx.stroke();
+    ctx.fillStyle = myColor.value; 
+    ctx.fillRect(currentPos.x,currentPos.y,lineWidth.value,lineWidth.value);
 
-    // Envoie info au serveur
-    if (lineWidth.value > 10) {
-        lineWidth.value = 10; 
-    }
-
-    socket.emit('newDrawing', startingPos, currentPos, ctx.strokeStyle, lineWidth.value); 
+    socket.emit('newDrawing', currentPos, ctx.fillStyle, lineWidth.value); 
     
     startingPos = currentPos;
 });
