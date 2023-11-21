@@ -7,7 +7,7 @@ body {
 }
 
 #loginForm {
-    background-color: rgba(133, 133, 133, 0.5); /* aquamarine with 0.5 opacity */
+    background-color: rgba(133, 133, 133, 0.5);
     position: fixed;
     top: 50%;
     left: 50%;
