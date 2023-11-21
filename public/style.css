@@ -59,3 +59,9 @@ body {
 #loginForm > button:hover {
     background-color: #593a93;
 }
+
+p {
+    position: fixed; 
+    left: 50%; 
+    transform: translate(-50%);
+}
