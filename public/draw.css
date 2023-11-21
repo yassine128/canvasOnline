@@ -142,10 +142,18 @@ body {
 }
 
 
-span {
+#taille {
     position: fixed; 
     color: white;
     top: 88%; 
     left: 48%; 
     transform: translate(-48%, -88%);
+}
+
+#couleur {
+    position: fixed; 
+    color: white;
+    top: 88%; 
+    left: 42%; 
+    transform: translate(-42%, -88%);
 }
