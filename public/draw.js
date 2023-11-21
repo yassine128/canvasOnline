@@ -13,6 +13,9 @@ const chatBox = document.getElementById("chatBox");
 const divUsers = document.getElementById("listOfUsers"); 
 const rect = canvas.getBoundingClientRect();
 
+let drawingId = Math.random().toString();
+let currentDrawingId;
+
 const defaultImage = new Image();
 defaultImage.src = "./assets/img/monkey.jpg";
 
@@ -48,26 +51,18 @@ socket.on('messageReceived', (message, username) => {
     chatBox.appendChild(p); 
 })
 
-socket.on('draw', (start, end, color, width) => {
-    ctx.strokeStyle = color;
-    ctx.lineWidth = width;
-    ctx.beginPath();
-    ctx.moveTo(start.x, start.y); 
-    ctx.lineTo(end.x, end.y); 
-    ctx.stroke(); 
+socket.on('draw', (start, end, color, width, receivedDrawingId) => {
+    // Check if the receivedDrawingId matches the current user's drawingId
+    if (receivedDrawingId !== currentDrawingId) {
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width;
+        ctx.beginPath();
+        ctx.moveTo(start.x, start.y);
+        ctx.lineTo(end.x, end.y);
+        ctx.stroke();
+    }
 });
 
-// socket.on('user', (username) => {
-//     location.reload();
-//     divUsers.innerHTML = "<h1>Users online</h1>";
-//     console.log(username.length)
-
-//     for (let i = 0; i < username.length; i++) {
-//         const p = document.createElement('p'); 
-//         p.textContent = username[i]; 
-//         divUsers.appendChild(p);
-//     }   
-// }); 
 
 // Save canvas logic 
 const saveBtn = document.getElementById("saveBtn"); 
@@ -95,6 +90,12 @@ canvas.addEventListener('mousedown', (e) => {
     ctx.strokeStyle = myColor.value;
     ctx.beginPath();
     ctx.moveTo(startingPos.x, startingPos.y);
+
+    // Set the currentDrawingId when a user starts drawing
+    currentDrawingId = Math.random().toString(); // Generate a unique ID for the drawing
+
+    // Emit the drawingId along with the drawing start position
+    socket.emit('newDrawing', startingPos, null, null, null, currentDrawingId);
 });
 
 canvas.addEventListener('mousemove', (e) => {
@@ -108,12 +109,12 @@ canvas.addEventListener('mousemove', (e) => {
     ctx.lineTo(currentPos.x, currentPos.y); 
     ctx.stroke();
 
-    // Envoie info au serveur
     if (lineWidth.value > 10) {
         lineWidth.value = 10; 
     }
 
-    socket.emit('newDrawing', startingPos, currentPos, ctx.strokeStyle, lineWidth.value); 
+    // Emit the drawingId along with the drawing positions
+    socket.emit('newDrawing', startingPos, currentPos, ctx.strokeStyle, lineWidth.value, currentDrawingId); 
     
     startingPos = currentPos;
 });
