@@ -141,3 +141,10 @@ body {
     color: white;
 }
 
+span {
+    position: fixed; 
+    color: white;
+    top: 88%; 
+    left: 48%; 
+    transform: translate(-48%, -88%);
+}
