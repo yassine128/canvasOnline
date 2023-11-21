@@ -3,14 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
   <title>Choose Username</title>
 </head>
-<body>   
-    <h1>Login Page</h1>
-    <input type="text" id="username"/>
+<body>  
+  <div id="loginForm">
+    <h1>Login</h1>
+    <input type="text" id="username" placeholder="Username"/>
     <button id="userBtn">Go!</button>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/index.js"></script>
+  </div> 
 </body>
 </html>

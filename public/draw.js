@@ -10,7 +10,8 @@ let startingPos = { x: 0, y: 0 };
 const chatBtn = document.getElementById("sendMsg"); 
 const chatBox = document.getElementById("chatBox");
 
-const divUsers = document.getElementsByClassName("listOfUsers")[0]; 
+const divUsers = document.getElementById("listOfUsers"); 
+const rect = canvas.getBoundingClientRect();
 
 const defaultImage = new Image();
 defaultImage.src = "./assets/img/monkey.jpg";
@@ -53,8 +54,9 @@ socket.on('draw', (start, end, color, width) => {
 });
 
 socket.on('user', (username) => {
+    location.reload();
     divUsers.innerHTML = "<h1>Users online</h1>";
-    console.log(username)
+    console.log(username.length)
 
     for (let i = 0; i < username.length; i++) {
         const p = document.createElement('p'); 
@@ -68,12 +70,10 @@ const saveBtn = document.getElementById("saveBtn");
 saveBtn.addEventListener("click", () => {
     const dataURL = canvas.toDataURL('image/jpg');
 
-    // Create a link and set the download attribute
     const a = document.createElement('a');
     a.href = dataURL;
     a.download = "canvasSS";
 
-    // Trigger a click on the link to start the download
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -84,7 +84,10 @@ saveBtn.addEventListener("click", () => {
 
 canvas.addEventListener('mousedown', (e) => {
     isDrawing = true;
-    startingPos = { x: e.clientX - canvas.offsetLeft, y: e.clientY - canvas.offsetTop };
+    startingPos = {
+        x: (e.clientX - rect.left) / rect.width * canvas.width,
+        y: (e.clientY - rect.top) / rect.height * canvas.height
+    };
     ctx.strokeStyle = myColor.value;
     ctx.beginPath();
     ctx.moveTo(startingPos.x, startingPos.y);
@@ -93,7 +96,10 @@ canvas.addEventListener('mousedown', (e) => {
 canvas.addEventListener('mousemove', (e) => {
     if (!isDrawing) return;
 
-    const currentPos = { x: e.clientX - canvas.offsetLeft, y: e.clientY - canvas.offsetTop };
+    const currentPos = {
+        x: (e.clientX - rect.left) / rect.width * canvas.width,
+        y: (e.clientY - rect.top) / rect.height * canvas.height
+    };
 
     ctx.lineTo(currentPos.x, currentPos.y); 
     ctx.stroke();
@@ -115,4 +121,3 @@ canvas.addEventListener('mouseup', () => {
 canvas.addEventListener('mouseout', () => {
     isDrawing = false;
 });
-

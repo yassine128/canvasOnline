@@ -23,7 +23,7 @@ server.listen(PORT, () => {
 });
 
 io.on('connection', (socket) => {
-  console.log('User connected');
+  //console.log('User connected');
   io.emit('user', listOfUsers);
 
   socket.on('newDrawing', (start, end, color, width) => {
@@ -42,7 +42,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', (reason) => {
-    console.log('User disconnected:', reason);
+    //console.log('User disconnected:', reason);
 
     // Retrieve the disconnected username from the cookie
     const disconnectedUsername = socket.handshake.headers.cookie
