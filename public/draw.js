@@ -57,18 +57,6 @@ socket.on('draw', (start, end, color, width) => {
     ctx.stroke(); 
 });
 
-// socket.on('user', (username) => {
-//     location.reload();
-//     divUsers.innerHTML = "<h1>Users online</h1>";
-//     console.log(username.length)
-
-//     for (let i = 0; i < username.length; i++) {
-//         const p = document.createElement('p'); 
-//         p.textContent = username[i]; 
-//         divUsers.appendChild(p);
-//     }   
-// }); 
-
 // Save canvas logic 
 const saveBtn = document.getElementById("saveBtn"); 
 saveBtn.addEventListener("click", () => {
@@ -108,7 +96,6 @@ canvas.addEventListener('mousemove', (e) => {
     ctx.lineTo(currentPos.x, currentPos.y); 
     ctx.stroke();
 
-    // Envoie info au serveur
     if (lineWidth.value > 10) {
         lineWidth.value = 10; 
     }
